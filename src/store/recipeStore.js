@@ -1,23 +1,39 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
-const url = 'https://dummyjson.com/recipes'
-
+const url = `https://dummyjson.com/recipes`;
 export const useRecipeStore =  defineStore('recipeStore',{
     state:()=>{
         return{
-            recipes:[]
+            recipes:[],
+            heartCount: 0,
         }
     },
-    getters:{
 
-    },
     actions:{
       getAllRecipes(){
         axios.get(url)
         .then((res)=>{
-            console.log(res);
             this.recipes = res.data.recipes;
         })
-      }
-    }
+        .catch((error) => {
+            console.error("Error when fetching recipes:", error);
+        });
+
+      },
+
+      incrementHeart(){
+        this.heartCount++
+      },
+
+      searchRecipes(keyword) {
+        axios.get(`${url}/search?q=${keyword}`)
+            .then((res) => {
+                console.log(res.data);
+                this.recipes = res.data.recipes;
+            })
+            .catch((error) => {
+                console.error("Error searching recipes:", error);
+            });
+        }
+    }  
 })

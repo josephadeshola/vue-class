@@ -1,26 +1,67 @@
 
 <script setup>
-import RecipeCard from "../components/RecipeCard.vue";
-import { onMounted } from "vue";
+import RecipeCard from '../components/RecipeCard.vue'
 import { useRecipeStore } from '../store/recipeStore.js'
-import { storeToRefs } from "pinia";
+import { storeToRefs } from 'pinia'
+import { ref, onMounted } from 'vue'
+const isLoading = ref(true)
 
-const store = useRecipeStore();
-const {recipes} = storeToRefs(store)
-
-onMounted(()=>{
-    store.getAllRecipes()
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false
+  }, 3000)
 })
+const store = useRecipeStore()
+const { recipes } = storeToRefs(store)
+
+
+onMounted(() => {
+  store.getAllRecipes()
+})
+
 </script>
     <template>
-      <h3>Recipes</h3>
-      <div class="container">
-        <div class="row">
-      <RecipeCard  v-for="(recipe, index) in recipes" :key="index" :rescipedetails="recipe"/>
-        </div>
-      </div>
-    </template>
+  <div v-if="isLoading" class="loader7">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div v-show="!isLoading" class="container mt-4 fade-in">
+    <div class="row">
+      <RecipeCard v-for="(recipe, index) in recipes" :key="index" :rescipedetails="recipe" />
+    </div>
+  </div>
+</template>
 
 <style>
+.loader7 {
+  display: flex;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
+.loader7 span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-image: linear-gradient(to right, #e9516a, #f38021);
+  animation: loader7-animation 1.5s ease-in-out infinite;
+}
+
+@keyframes loader7-animation {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.5;
+  }
+}
 </style>
