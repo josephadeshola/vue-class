@@ -3,12 +3,13 @@
 defineProps(['rescipedetails'])
 import { useRecipeStore } from '@/store/recipeStore'
 import { ref } from 'vue'
+import RatingComp from './RatingComp.vue'
 import RecipeModal from './RecipeModal.vue'
+
 
 const recipeStore = useRecipeStore();
 const added = ref(false)
 const toggleAdded =()=>{
-    // recipeStore.incrementHeart()
     added.value = !added.value
 }
 </script>
@@ -47,10 +48,7 @@ const toggleAdded =()=>{
           <span class="text-danger px-1">{{ rescipedetails.prepTimeMinutes }} mins</span>
         </div>
         <div class="mt-1">
-          <i class="bi text-danger ms-2 bi-star"></i>
-          <i class="bi text-danger ms-2 bi-star"></i>
-          <i class="bi text-danger ms-2 bi-star-fill"></i>
-          <i class="bi text-danger ms-2 bi-star-fill"></i>
+          <RatingComp :rating="rescipedetails.rating"/>
         </div>
         <div>
           <i

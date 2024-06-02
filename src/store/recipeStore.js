@@ -35,5 +35,7 @@ export const useRecipeStore =  defineStore('recipeStore',{
                 console.error("Error searching recipes:", error);
             });
         }
+
+        
     }  
 })
