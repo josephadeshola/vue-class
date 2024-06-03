@@ -14,11 +14,21 @@ onMounted(() => {
 const store = useRecipeStore()
 const { recipes } = storeToRefs(store)
 
-
 onMounted(() => {
   store.getAllRecipes()
 })
-
+// const getName=(e)=>{
+//   console.log(e);
+//   console.log('from child');
+// }
+let getCount = ref(0)
+const getHeart = (e) => {
+  if (e) {
+    getCount.value++
+  } else {
+    getCount.value--
+  }
+}
 </script>
     <template>
   <div v-if="isLoading" class="loader7">
@@ -28,8 +38,14 @@ onMounted(() => {
     <span></span>
   </div>
   <div v-show="!isLoading" class="container mt-4 fade-in">
+    <div class="mt-5 py-1">Count:{{ getCount }}</div>
     <div class="row">
-      <RecipeCard v-for="(recipe, index) in recipes" :key="index" :rescipedetails="recipe" />
+      <RecipeCard
+        v-for="(recipe, index) in recipes"
+        :key="index"
+        :rescipedetails="recipe"
+        @heart="getHeart"
+      />
     </div>
   </div>
 </template>

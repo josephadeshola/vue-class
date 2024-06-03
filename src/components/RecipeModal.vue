@@ -8,6 +8,7 @@ defineProps(['rescipeDetails'])
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
           {{ rescipeDetails.name }} <b> Instructions </b>
+          <button class="btn btn-danger">Edit recipe name</button>
         </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>

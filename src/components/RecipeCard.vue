@@ -1,21 +1,25 @@
 
 <script setup>
 defineProps(['rescipedetails'])
+const emit = defineEmits(['updateName'])
 import { useRecipeStore } from '@/store/recipeStore'
 import { ref } from 'vue'
 import RatingComp from './RatingComp.vue'
 import RecipeModal from './RecipeModal.vue'
+const getName = () => {
+  emit('updateName', ['mango', 'pawpaw'])
+}
 
-
-const recipeStore = useRecipeStore();
+const recipeStore = useRecipeStore()
 const added = ref(false)
-const toggleAdded =()=>{
-    added.value = !added.value
+const toggleAdded = () => {
+  added.value = !added.value
+  emit('heart', added.value)
 }
 </script>
 
 <template>
-  <div class="get-display col-md-3 gap-5">
+  <div class="col-md-3 gap-5">
     <div class="card20 mt-5 shadow rounded">
       <div class="card20-header">
         <img
@@ -48,12 +52,12 @@ const toggleAdded =()=>{
           <span class="text-danger px-1">{{ rescipedetails.prepTimeMinutes }} mins</span>
         </div>
         <div class="mt-1">
-          <RatingComp :rating="rescipedetails.rating"/>
+          <RatingComp :rating="rescipedetails.rating" />
         </div>
         <div>
           <i
             style="cursor: pointer"
-            :class="`bi float-end ${added ? 'bi-heart-fill text-danger' : 'bi-heart'}`"
+            :class="`bi text-danger float-end ${added ? 'bi-heart-fill text-danger' : 'bi-heart'}`"
             @click="toggleAdded"
           ></i>
         </div>
@@ -65,6 +69,8 @@ const toggleAdded =()=>{
         >
           Check Recipe
         </button>
+     
+
         <div
           class="modal fade"
           :id="'modal-' + rescipedetails.id"

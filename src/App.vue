@@ -19,6 +19,7 @@ onMounted(() => {
 let search = ref('')
 const handleSearch = () => {
  recipeStore.searchRecipes(search.value);
+ 
 }
 </script>
 
